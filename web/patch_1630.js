@@ -1,9 +1,9 @@
-// AI COMPANY OS polish patch 2026-09-03 16:30
+// AI COMPANY OS polish patch 2026-09-03 18:15
 (function(){
-  const PATCH_BUILD='DASHBOARD-RIG-20260903-1630';
+  const PATCH_BUILD='DASHBOARD-RIG-20260903-1815';
   function clampDest(t){
     if(!Array.isArray(t)) return t;
-    return [Math.max(5,Math.min(94,t[0])),Math.max(8,Math.min(91,t[1]))];
+    return [Math.max(6,Math.min(93,t[0])),Math.max(10,Math.min(90,t[1]))];
   }
   const originalMoveTo=moveTo;
   moveTo=function(a,t,m,done){ return originalMoveTo(a,clampDest(t),m,done); };
@@ -29,8 +29,8 @@
       if(box) box.innerHTML=`<h3>秘書ウォッチ</h3><b>未返信候補 ${waiting.length}件</b>${waiting.slice(0,6).map(x=>`<div class="watchItem"><b>${x.subject}</b><br>${x.from}<br><span class="muted">${fmtAge(x.age_hours)}</span></div>`).join('')}`;
       const now=Date.now();
       const imminent=cal.filter(e=>e.start&&e.start.includes('T')).map(e=>({e,ms:new Date(e.start).getTime()-now})).filter(x=>x.ms>=0&&x.ms<=60*60*1000).sort((a,b)=>a.ms-b.ms);
-      const a=document.getElementById('secretaryImmediate');
-      if(a) a.innerHTML=imminent.map(x=>{const min=Math.max(0,Math.round(x.ms/60000)),e=x.e,online=/zoom|meet|teams|オンライン|web会議/i.test(e.summary||''),txt=[e.location||'',e.description||'',e.hangoutLink||''].join(' '),hasUrl=/https?:\/\/\S*(zoom\.us|meet\.google\.com|teams\.microsoft\.com)/i.test(txt),missing=online&&!hasUrl;return `<div class="alert ${min<=10?'critical':''}"><b>秘書AI｜${min}分後</b><br>${e.summary}${missing?'<br>⚠ Web会議URLが見つかりません':''}</div>`}).join('');
+      const alertBox=document.getElementById('secretaryImmediate');
+      if(alertBox) alertBox.innerHTML=imminent.map(x=>{const min=Math.max(0,Math.round(x.ms/60000)),e=x.e,online=/zoom|meet|teams|オンライン|web会議/i.test(e.summary||''),txt=[e.location||'',e.description||'',e.hangoutLink||''].join(' '),hasUrl=/https?:\/\/\S*(zoom\.us|meet\.google\.com|teams\.microsoft\.com)/i.test(txt),missing=online&&!hasUrl;return `<div class="alert ${min<=10?'critical':''}"><b>秘書AI｜${min}分後</b><br>${e.summary}${missing?'<br>⚠ Web会議URLが見つかりません':''}</div>`}).join('');
       const conn=document.getElementById('conn');if(conn){conn.textContent='● '+PATCH_BUILD;conn.className='ok'}
     }catch(e){console.warn('secretaryDeepCheck',e)}
   }
