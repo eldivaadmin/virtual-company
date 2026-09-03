@@ -8,7 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from .db import init_db,add_event,recent_events,create_task,finish_task,task_counts,set_presence,get_presence,ceo_report,ceo_inbox,set_agent_load,agent_loads
 from .agents import AGENTS,BY_ID
 from .llm import route
-from .google_services import authorize_account,upcoming_calendar,account_status,google_health
+from .google_services import authorize_account,upcoming_calendar,account_status,google_health,unreplied_threads
 from .jobs import install_jobs,job_gmail,job_calendar
 from . import config
 BASE=Path(__file__).resolve().parent.parent
@@ -23,9 +23,9 @@ def startup():init_db();add_event('SYSTEM','boot','AI COMPANY OS 起動');instal
 def shutdown():
  if scheduler.running:scheduler.shutdown(wait=False)
 @app.get('/api/build')
-def build():return {'build':'DASHBOARD-RIG-20260903-1612','root':str(BASE)}
+def build():return {'build':'DASHBOARD-RIG-20260903-1630','root':str(BASE)}
 @app.get('/api/status')
-def status():return {'ok':True,'agents':len(AGENTS),'tasks':task_counts(),'openai':bool(config.OPENAI_API_KEY),'claude':bool(config.ANTHROPIC_API_KEY),'google_credentials':config.GOOGLE_CREDENTIALS.exists(),'google_accounts':config.google_accounts(),'google_status':account_status()}
+def status():return {'ok':True,'agents':len(AGENTS),'tasks':task_counts(),'openai':bool(config.OPENAI_API_KEY),'claude':bool(config.ANTHROPIC_API_KEY),'gemini':bool(getattr(config,'GOOGLE_API_KEY','')),'google_credentials':config.GOOGLE_CREDENTIALS.exists(),'google_accounts':config.google_accounts(),'google_status':account_status()}
 @app.get('/api/agents')
 def agents():
  p=get_presence();return [a|{'presence':p.get(a['id'],{'state':'present'})} for a in AGENTS]
@@ -44,6 +44,8 @@ def ceo_inbox_api(limit:int=30):return ceo_inbox(limit)
 def social_api(force:bool=False):
  from .social_stats import social_stats
  return social_stats(force)
+@app.get('/api/mail/unreplied')
+def mail_unreplied(limit:int=30,days:int=14):return unreplied_threads(max_results=max(10,min(limit,100)),days=max(1,min(days,90)))
 @app.post('/api/google/credentials')
 def save_google_credentials(body:GoogleCredsIn):
  try:
@@ -83,7 +85,7 @@ def check_calendar():job_calendar();return {'ok':True}
 def task(body:TaskIn):
  a=BY_ID.get(body.agent_id)
  if not a:raise HTTPException(404,'agent not found')
- provider=body.provider or a['provider'];tid=create_task(a['name'],body.prompt,provider);set_agent_load(a['id'],85,80);add_event(a['name'],'task_start',body.prompt,{'task_id':tid,'provider':provider});system=f"あなたはAI COMPANY OSの{a['name']}です。担当は『{a['role']}』。社長向けに実務でそのまま使える成果物を日本語で返してください。事実と推測を分けてください。"
+ provider=body.provider or a['provider'];tid=create_task(a['name'],body.prompt,provider);set_agent_load(a['id'],85,80);add_event(a['name'],'task_start',body.prompt,{'task_id':tid,'provider':provider});system=f"あなたはAI COMPANY OSの{a['name']}です。担当は『{a['role']}』。使命は『{a.get('mission','')}』。社長向けに実務でそのまま使える成果物を日本語で返してください。事実と推測を分けてください。"
  try:
   result=route(provider,system,body.prompt);finish_task(tid,result);set_agent_load(a['id'],10,76);add_event(a['name'],'task_done',f'タスク完了: {body.prompt[:80]}',{'task_id':tid,'result':result,'provider':provider});ceo_report(a['name'],'タスク完了',result[:1200]);return {'task_id':tid,'result':result,'provider':provider}
  except Exception as e:
