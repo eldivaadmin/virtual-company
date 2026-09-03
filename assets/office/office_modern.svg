@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+<defs>
+ <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef2f5"/><stop offset="1" stop-color="#cfd7df"/></linearGradient>
+ <linearGradient id="floor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b6bec6"/><stop offset="1" stop-color="#87939e"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#bfe9ff" stop-opacity=".42"/><stop offset="1" stop-color="#497b9a" stop-opacity=".16"/></linearGradient>
+ <linearGradient id="dark" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#152838"/><stop offset="1" stop-color="#0b1621"/></linearGradient>
+ <filter id="shadow"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-opacity=".28"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="8"/></filter>
+ <pattern id="grid" width="55" height="55" patternUnits="userSpaceOnUse"><path d="M55 0H0V55" fill="none" stroke="#ffffff" stroke-opacity=".08"/></pattern>
+</defs>
+<rect width="1600" height="900" fill="#0a1521"/>
+<rect x="12" y="12" width="1576" height="876" rx="18" fill="#172633" stroke="#284b64" stroke-width="4"/>
+
+<!-- room shells -->
+<g filter="url(#shadow)">
+ <g id="r1"><rect x="24" y="24" width="377" height="267" rx="8" fill="url(#wall)"/><rect x="24" y="205" width="377" height="86" fill="url(#floor)"/></g>
+ <g id="r2"><rect x="409" y="24" width="377" height="267" rx="8" fill="url(#wall)"/><rect x="409" y="205" width="377" height="86" fill="url(#floor)"/></g>
+ <g id="r3"><rect x="794" y="24" width="377" height="267" rx="8" fill="url(#wall)"/><rect x="794" y="205" width="377" height="86" fill="url(#floor)"/></g>
+ <g id="r4"><rect x="1179" y="24" width="397" height="267" rx="8" fill="url(#dark)"/><rect x="1179" y="205" width="397" height="86" fill="#172432"/></g>
+ <g id="r5"><rect x="24" y="301" width="377" height="267" rx="8" fill="url(#wall)"/><rect x="24" y="482" width="377" height="86" fill="url(#floor)"/></g>
+ <g id="r6"><rect x="409" y="301" width="377" height="267" rx="8" fill="url(#wall)"/><rect x="409" y="482" width="377" height="86" fill="url(#floor)"/></g>
+ <g id="r7"><rect x="794" y="301" width="377" height="267" rx="8" fill="#15212c"/><rect x="794" y="482" width="377" height="86" fill="#101b24"/></g>
+ <g id="r8"><rect x="1179" y="301" width="397" height="267" rx="8" fill="#17242e"/><rect x="1179" y="482" width="397" height="86" fill="#101a22"/></g>
+ <g id="r9"><rect x="24" y="578" width="270" height="298" rx="8" fill="url(#wall)"/><rect x="24" y="790" width="270" height="86" fill="url(#floor)"/></g>
+ <g id="r10"><rect x="302" y="578" width="704" height="298" rx="8" fill="#1a2730"/><rect x="302" y="790" width="704" height="86" fill="#111d25"/></g>
+ <g id="r11"><rect x="1014" y="578" width="562" height="298" rx="8" fill="#cbd2d8"/><rect x="1014" y="790" width="562" height="86" fill="#9aa3ac"/></g>
+</g>
+
+<!-- glass dividers -->
+<g stroke="#6ebce0" stroke-opacity=".46" stroke-width="3">
+ <path d="M401 24V291M786 24V291M1171 24V291M401 301V568M786 301V568M1171 301V568M294 578V876M1006 578V876"/>
+</g>
+<g fill="url(#glass)" opacity=".55"><rect x="390" y="24" width="11" height="267"/><rect x="775" y="24" width="11" height="267"/><rect x="1160" y="24" width="11" height="267"/><rect x="390" y="301" width="11" height="267"/><rect x="775" y="301" width="11" height="267"/><rect x="1160" y="301" width="11" height="267"/></g>
+
+<!-- ceiling lights -->
+<g fill="#fff" opacity=".92">
+ <rect x="75" y="46" width="90" height="6" rx="3"/><rect x="250" y="46" width="90" height="6" rx="3"/>
+ <rect x="455" y="46" width="90" height="6" rx="3"/><rect x="635" y="46" width="90" height="6" rx="3"/>
+ <rect x="840" y="46" width="90" height="6" rx="3"/><rect x="1020" y="46" width="90" height="6" rx="3"/>
+ <rect x="1235" y="46" width="90" height="6" rx="3"/><rect x="1430" y="46" width="90" height="6" rx="3"/>
+</g>
+
+<!-- labels -->
+<g font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic',sans-serif" font-weight="700" text-anchor="middle">
+ <g fill="#0d1720"><rect x="137" y="42" width="150" height="38" rx="9"/><text x="212" y="68" fill="#fff" font-size="22">社長室</text></g>
+ <g fill="#0d1720"><rect x="522" y="42" width="150" height="38" rx="9"/><text x="597" y="68" fill="#fff" font-size="22">秘書室</text></g>
+ <g fill="#0d1720"><rect x="907" y="42" width="150" height="38" rx="9"/><text x="982" y="68" fill="#fff" font-size="22">企画室</text></g>
+ <g fill="#0d1720"><rect x="1302" y="42" width="150" height="38" rx="9"/><text x="1377" y="68" fill="#fff" font-size="22">営業部屋</text></g>
+ <g fill="#0d1720"><rect x="137" y="319" width="150" height="38" rx="9"/><text x="212" y="345" fill="#fff" font-size="22">経理室</text></g>
+ <g fill="#0d1720"><rect x="522" y="319" width="150" height="38" rx="9"/><text x="597" y="345" fill="#fff" font-size="22">会議室</text></g>
+ <g fill="#0d1720"><rect x="907" y="319" width="150" height="38" rx="9"/><text x="982" y="345" fill="#fff" font-size="22">開発室</text></g>
+ <g fill="#0d1720"><rect x="1302" y="319" width="150" height="38" rx="9"/><text x="1377" y="345" fill="#fff" font-size="22">マーケ室</text></g>
+ <g fill="#0d1720"><rect x="82" y="596" width="150" height="38" rx="9"/><text x="157" y="622" fill="#fff" font-size="22">外出</text></g>
+ <g fill="#0d1720"><rect x="1220" y="596" width="150" height="38" rx="9"/><text x="1295" y="622" fill="#fff" font-size="22">給湯室</text></g>
+</g>
+
+<!-- CEO / secretary desks -->
+<g fill="#39444d" stroke="#20272d" stroke-width="3">
+ <rect x="95" y="185" width="230" height="26" rx="4"/><rect x="112" y="211" width="196" height="42" rx="4"/>
+ <rect x="490" y="185" width="215" height="25" rx="4"/><rect x="510" y="210" width="175" height="40" rx="4"/>
+</g>
+<g fill="#101820"><rect x="173" y="154" width="72" height="43" rx="3"/><rect x="553" y="154" width="72" height="43" rx="3"/></g>
+<g fill="#35d6ff" opacity=".72"><rect x="180" y="160" width="58" height="30" rx="2"/><rect x="560" y="160" width="58" height="30" rx="2"/></g>
+
+<!-- planning board -->
+<rect x="860" y="92" width="245" height="107" rx="6" fill="#f8fafc" stroke="#697987" stroke-width="5"/>
+<g stroke="#5d768c" stroke-width="3" fill="none" opacity=".8"><path d="M880 120h48v52h58v-30h74v38"/><path d="M900 110l18 12 20-9 22 18 20-16"/></g>
+<g fill="#ffb347"><rect x="1008" y="110" width="20" height="18"/><rect x="1035" y="140" width="22" height="20"/><rect x="1070" y="115" width="18" height="18"/></g>
+
+<!-- sales chart -->
+<rect x="1260" y="95" width="235" height="105" rx="6" fill="#dfeaf2" stroke="#426984" stroke-width="4"/>
+<path d="M1280 175L1310 158L1340 165L1372 138L1405 147L1442 118L1470 101" stroke="#ef513d" stroke-width="7" fill="none"/>
+<g stroke="#8da4b5" stroke-width="1"><path d="M1280 110H1478M1280 135H1478M1280 160H1478"/></g>
+
+<!-- accounting furniture -->
+<g fill="#3c454c"><rect x="78" y="462" width="250" height="25" rx="4"/><rect x="90" y="487" width="226" height="40" rx="4"/></g>
+<g fill="#1a242c"><rect x="130" y="430" width="58" height="38"/><rect x="210" y="430" width="58" height="38"/></g>
+
+<!-- conference table -->
+<rect x="480" y="430" width="238" height="92" rx="44" fill="#815c36" stroke="#5b3d22" stroke-width="4"/>
+<g fill="#202a31"><rect x="450" y="438" width="26" height="55" rx="9"/><rect x="722" y="438" width="26" height="55" rx="9"/><rect x="510" y="405" width="34" height="24" rx="8"/><rect x="650" y="405" width="34" height="24" rx="8"/></g>
+<rect x="510" y="355" width="180" height="66" rx="5" fill="#e9f2f8" stroke="#587185" stroke-width="4"/>
+<circle cx="556" cy="389" r="24" fill="#40a5da"/><path d="M556 365v24h24" stroke="#ffb447" stroke-width="10"/>
+<path d="M610 400l20-18 22 9 18-26" stroke="#38a169" stroke-width="5" fill="none"/>
+
+<!-- development room -->
+<rect x="840" y="360" width="286" height="112" rx="8" fill="#07131c" stroke="#2b6380" stroke-width="4"/>
+<g fill="#0a2331" stroke="#1d7898" stroke-width="2"><rect x="855" y="375" width="120" height="76" rx="4"/><rect x="992" y="375" width="120" height="76" rx="4"/></g>
+<g stroke="#42e8f5" stroke-width="3" opacity=".8"><path d="M870 392h70m-70 12h50m-50 12h82m-82 12h62M1008 392h74m-74 12h45m-45 12h82m-82 12h60"/></g>
+<rect x="860" y="475" width="250" height="28" rx="5" fill="#57422f"/>
+<rect x="816" y="358" width="18" height="152" fill="#26333d"/><g fill="#35d6ff"><circle cx="825" cy="380" r="4"/><circle cx="825" cy="399" r="4"/><circle cx="825" cy="418" r="4"/></g>
+
+<!-- marketing dashboards -->
+<rect x="1228" y="360" width="292" height="112" rx="8" fill="#07151f" stroke="#266c91" stroke-width="4"/>
+<g stroke="#1ec8ea" fill="none" stroke-width="4"><path d="M1250 440l30-34 28 18 34-45 32 26 36-28 48 42"/><path d="M1400 445v-45m20 45v-62m20 62v-34m20 34v-75"/></g>
+<rect x="1250" y="483" width="235" height="24" rx="4" fill="#5a4633"/>
+
+<!-- bottom lobby -->
+<rect x="382" y="646" width="460" height="104" rx="8" fill="#101820"/>
+<rect x="432" y="668" width="360" height="58" rx="7" fill="#112734" stroke="#39d2ff" stroke-opacity=".45"/>
+<text x="612" y="704" font-family="-apple-system,BlinkMacSystemFont,'Hiragino Sans',sans-serif" text-anchor="middle" font-size="34" font-weight="700" fill="#63e2ff">AI COMPANY</text>
+<text x="612" y="728" font-family="sans-serif" text-anchor="middle" font-size="14" fill="#a8cbd8">MAKE WORK SMARTER</text>
+<rect x="470" y="760" width="285" height="55" rx="25" fill="#37444d"/>
+<ellipse cx="612" cy="835" rx="82" ry="25" fill="#3a2d25"/>
+<g fill="#3f8d55"><circle cx="350" cy="746" r="42"/><circle cx="865" cy="742" r="46"/></g>
+<g fill="#6e5137"><rect x="338" y="755" width="24" height="72"/><rect x="852" y="755" width="24" height="72"/></g>
+
+<!-- exit -->
+<rect x="62" y="657" width="185" height="164" rx="5" fill="url(#glass)" stroke="#5f879e" stroke-width="4"/>
+<path d="M154 657v164M62 742h185" stroke="#82a9bb" stroke-width="3"/>
+<rect x="112" y="628" width="85" height="28" rx="4" fill="#1a2933"/><path d="M155 636v12m-7-6h14" stroke="#6af1dd" stroke-width="4"/>
+
+<!-- kitchenette -->
+<rect x="1060" y="690" width="390" height="110" rx="6" fill="#29343b"/>
+<rect x="1080" y="655" width="250" height="40" fill="#d9dee2"/><rect x="1098" y="714" width="110" height="72" fill="#404b51"/><rect x="1220" y="714" width="110" height="72" fill="#404b51"/>
+<rect x="1365" y="652" width="135" height="165" rx="5" fill="#dfe5e8" stroke="#7f8d97" stroke-width="3"/><rect x="1378" y="668" width="109" height="78" rx="4" fill="#142431"/>
+<g fill="#35d6ff"><circle cx="1394" cy="686" r="5"/><circle cx="1420" cy="686" r="5"/><circle cx="1446" cy="686" r="5"/></g>
+
+<!-- plants -->
+<g fill="#2c7a4b"><circle cx="55" cy="130" r="28"/><circle cx="355" cy="132" r="26"/><circle cx="448" cy="132" r="26"/><circle cx="748" cy="132" r="27"/><circle cx="833" cy="150" r="25"/><circle cx="1140" cy="150" r="25"/><circle cx="1218" cy="154" r="27"/><circle cx="1537" cy="154" r="27"/></g>
+<g fill="#765234"><rect x="43" y="153" width="24" height="44" rx="4"/><rect x="343" y="154" width="24" height="44" rx="4"/><rect x="436" y="154" width="24" height="44" rx="4"/><rect x="736" y="154" width="24" height="44" rx="4"/></g>
+
+<!-- subtle grid and border -->
+<rect x="24" y="24" width="1552" height="852" fill="url(#grid)" opacity=".18" pointer-events="none"/>
+<rect x="24" y="24" width="1552" height="852" rx="8" fill="none" stroke="#426a80" stroke-width="4"/>
+</svg>
