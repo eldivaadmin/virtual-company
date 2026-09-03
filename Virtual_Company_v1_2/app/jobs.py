@@ -1,0 +1,18 @@
+from .db import add_event
+from .google_services import poll_gmail,upcoming_calendar
+from . import config
+
+def job_gmail():
+    try:
+        rows=poll_gmail()
+        if rows:add_event('秘書AI','status',f'{len(rows)}件の新着メールを確認')
+    except Exception as e:add_event('SYSTEM','error',f'Gmail確認エラー: {e}')
+
+def job_calendar():
+    try:
+        rows=upcoming_calendar();add_event('管理AI','calendar',f'24時間以内の予定 {len(rows)}件を確認',{'events':rows})
+    except Exception as e:add_event('SYSTEM','error',f'Calendar確認エラー: {e}')
+
+def install_jobs(scheduler):
+    scheduler.add_job(job_gmail,'interval',minutes=config.GMAIL_POLL_MINUTES,id='gmail',replace_existing=True,max_instances=1)
+    scheduler.add_job(job_calendar,'interval',minutes=config.CALENDAR_POLL_MINUTES,id='calendar',replace_existing=True,max_instances=1)

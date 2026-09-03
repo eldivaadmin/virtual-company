@@ -1,0 +1,10 @@
+AI COMPANY OS / ターミナル最短起動
+
+1) Terminalでこのフォルダへ移動
+2) chmod +x terminal_start.sh terminal_diagnose.sh terminal_set_keys.sh
+3) ./terminal_start.sh
+4) http://127.0.0.1:8765 を開く
+
+停止: Control+C
+診断: ./terminal_diagnose.sh
+APIキー設定: ./terminal_set_keys.sh

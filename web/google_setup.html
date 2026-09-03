@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Virtual Company Google接続</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;background:#07111f;color:#eaf2ff;margin:0;padding:32px}
+.wrap{max-width:780px;margin:auto}.card{background:#101d30;border:1px solid #334963;border-radius:14px;padding:20px;margin:14px 0}
+h1{font-size:25px}h2{font-size:17px}.muted{color:#9fb1c8}.ok{color:#58e692}.bad{color:#ff7d7d}
+button{background:#1d5da7;border:0;color:white;padding:11px 16px;border-radius:8px;font-size:14px;cursor:pointer;margin:4px}
+input[type=file]{display:block;margin:12px 0;padding:8px;background:#0b1627;color:white;width:100%}
+.row{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid #293b53;padding:12px 0}
+code{background:#08111e;padding:3px 7px;border-radius:5px}.msg{white-space:pre-wrap;padding:10px;background:#091423;border-radius:8px}
+</style>
+</head>
+<body><div class="wrap">
+<h1>Google接続セットアップ</h1>
+<p class="muted">この画面はMac内の <code>127.0.0.1</code> だけで動作します。</p>
+
+<div class="card">
+<h2>1. Google OAuth JSON</h2>
+<p>Google Cloud Consoleで作成した「Desktop app」のOAuth JSONを選択してください。</p>
+<input id="file" type="file" accept=".json,application/json">
+<button id="save">JSONをVirtual Companyへ登録</button>
+<div id="fileStatus" class="msg">未登録</div>
+</div>
+
+<div class="card">
+<h2>2. アカウント認証</h2>
+<p class="muted">ボタンを押すとGoogleログイン画面が開きます。表示されたメールアドレスと同じアカウントを選択してください。</p>
+<div class="row"><span>Gmail: naoya.kizuka@gmail.com</span><button data-email="naoya.kizuka@gmail.com">接続</button></div>
+<div class="row"><span>Gmail: xnetwork.lab@gmail.com</span><button data-email="xnetwork.lab@gmail.com">接続</button></div>
+<div class="row"><span>Calendar: lamp.kizuka@gmail.com</span><button data-email="lamp.kizuka@gmail.com">接続</button></div>
+<div id="authStatus" class="msg">未接続</div>
+</div>
+
+<div class="card">
+<h2>3. 接続確認</h2>
+<button id="health">現在の接続状態を確認</button>
+<div id="healthStatus" class="msg">確認待ち</div>
+<p><a style="color:#81b9ff" href="/">Virtual Companyへ戻る</a></p>
+</div>
+</div>
+<script>
+async function api(url,opt){const r=await fetch(url,opt);const t=await r.text();if(!r.ok)throw new Error(t);return JSON.parse(t)}
+document.getElementById('save').onclick=async()=>{
+ const f=document.getElementById('file').files[0];if(!f){alert('JSONファイルを選択してください');return}
+ const content=await f.text();
+ try{await api('/api/google/credentials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content})});
+ document.getElementById('fileStatus').innerHTML='<span class="ok">登録済み</span>'}
+ catch(e){document.getElementById('fileStatus').innerHTML='<span class="bad">'+e.message+'</span>'}
+};
+document.querySelectorAll('[data-email]').forEach(b=>b.onclick=async()=>{
+ try{await api('/api/google/connect/'+encodeURIComponent(b.dataset.email),{method:'POST'});b.textContent='認証開始…'}
+ catch(e){alert(e.message)}
+});
+async function poll(){
+ try{
+  const s=await api('/api/google/connect-status');
+  document.getElementById('authStatus').textContent=JSON.stringify(s,null,2);
+ }catch(e){}
+}
+setInterval(poll,1500);
+document.getElementById('health').onclick=async()=>{
+ try{
+  const h=await api('/api/google/health');
+  document.getElementById('healthStatus').textContent=JSON.stringify(h,null,2);
+ }catch(e){document.getElementById('healthStatus').textContent=e.message}
+};
+</script></body></html>
