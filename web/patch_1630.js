@@ -1,5 +1,6 @@
 // AI COMPANY OS polish patch 2026-09-03 16:30
 (function(){
+  const PATCH_BUILD='DASHBOARD-RIG-20260903-1630';
   function clampDest(t){
     if(!Array.isArray(t)) return t;
     return [Math.max(5,Math.min(94,t[0])),Math.max(8,Math.min(91,t[1]))];
@@ -7,7 +8,6 @@
   const originalMoveTo=moveTo;
   moveTo=function(a,t,m,done){ return originalMoveTo(a,clampDest(t),m,done); };
 
-  // LOAD follows actual state. STAMINA is intentionally demo/random until a real fatigue model is defined.
   function reconcileResources(){
     if(!AGENTS || !AGENTS.length) return;
     AGENTS.forEach(a=>{
@@ -25,19 +25,16 @@
   async function secretaryDeepCheck(){
     try{
       const [waiting,cal]=await Promise.all([j('/api/mail/unreplied?limit=40&days=14').catch(()=>[]),j('/api/calendar').catch(()=>[])]);
-      let box=document.getElementById('secretaryWatch');
-      if(!box){ box=document.createElement('div');box.id='secretaryWatch';document.getElementById('status').appendChild(box); }
-      box.innerHTML=`<h3>秘書ウォッチ</h3><b>未返信候補 ${waiting.length}件</b>${waiting.slice(0,6).map(x=>`<div class="watchItem"><b>${x.subject}</b><br>${x.from}<br><span class="muted">${fmtAge(x.age_hours)}</span></div>`).join('')}`;
+      const box=document.getElementById('secretaryWatch');
+      if(box) box.innerHTML=`<h3>秘書ウォッチ</h3><b>未返信候補 ${waiting.length}件</b>${waiting.slice(0,6).map(x=>`<div class="watchItem"><b>${x.subject}</b><br>${x.from}<br><span class="muted">${fmtAge(x.age_hours)}</span></div>`).join('')}`;
       const now=Date.now();
       const imminent=cal.filter(e=>e.start&&e.start.includes('T')).map(e=>({e,ms:new Date(e.start).getTime()-now})).filter(x=>x.ms>=0&&x.ms<=60*60*1000).sort((a,b)=>a.ms-b.ms);
-      let a=document.getElementById('secretaryImmediate');
-      if(!a){a=document.createElement('div');a.id='secretaryImmediate';document.getElementById('alerts').prepend(a)}
-      a.innerHTML=imminent.map(x=>{const min=Math.max(0,Math.round(x.ms/60000)),e=x.e,online=/zoom|meet|teams|オンライン|web会議/i.test(e.summary||''),txt=[e.location||'',e.description||'',e.hangoutLink||''].join(' '),hasUrl=/https?:\/\/\S*(zoom\.us|meet\.google\.com|teams\.microsoft\.com)/i.test(txt),missing=online&&!hasUrl;return `<div class="alert ${min<=10?'critical':''}"><b>秘書AI｜${min}分後</b><br>${e.summary}${missing?'<br>⚠ Web会議URLが見つかりません':''}</div>`}).join('');
+      const a=document.getElementById('secretaryImmediate');
+      if(a) a.innerHTML=imminent.map(x=>{const min=Math.max(0,Math.round(x.ms/60000)),e=x.e,online=/zoom|meet|teams|オンライン|web会議/i.test(e.summary||''),txt=[e.location||'',e.description||'',e.hangoutLink||''].join(' '),hasUrl=/https?:\/\/\S*(zoom\.us|meet\.google\.com|teams\.microsoft\.com)/i.test(txt),missing=online&&!hasUrl;return `<div class="alert ${min<=10?'critical':''}"><b>秘書AI｜${min}分後</b><br>${e.summary}${missing?'<br>⚠ Web会議URLが見つかりません':''}</div>`}).join('');
+      const conn=document.getElementById('conn');if(conn){conn.textContent='● '+PATCH_BUILD;conn.className='ok'}
     }catch(e){console.warn('secretaryDeepCheck',e)}
   }
 
-  setInterval(reconcileResources,5000);
-  setTimeout(reconcileResources,1500);
-  setInterval(secretaryDeepCheck,60000);
-  setTimeout(secretaryDeepCheck,2500);
+  setInterval(reconcileResources,5000);setTimeout(reconcileResources,1500);
+  setInterval(secretaryDeepCheck,15000);setTimeout(secretaryDeepCheck,2500);
 })();
